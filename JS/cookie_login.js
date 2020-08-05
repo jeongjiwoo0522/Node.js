@@ -31,7 +31,7 @@ const server = http.createServer((req, res) => {
         res.end(`${cookies.name}님 안녕하세요`);
     }
     else{
-        fs.readFile('./cookie_login.html', (err, data) => {
+        fs.readFile('../HTML/cookie_login.html', (err, data) => {
             if(err){
                 throw err;
             }

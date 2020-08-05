@@ -1,5 +1,5 @@
 const http = require('http');
-const dt = require('./modules');
+const dt = require('./modules.js');
 
 const server = http.createServer((req, res) => {
     const cookies = dt.parseCookies(req.headers.cookie);
