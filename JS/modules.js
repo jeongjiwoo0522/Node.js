@@ -1,4 +1,5 @@
-module.exports.parseCookies = (cookie = '') => 
+module.exports = { 
+    parseCookies: (cookie = '') => 
     cookie
     .split(';')
     .map(v => v.split('='))
@@ -6,4 +7,5 @@ module.exports.parseCookies = (cookie = '') =>
     .reduce((acc, [k, v]) => {
         acc[k.trim()] = decodeURIComponent(v);
         return acc;
-    }, {});
+    }, {})
+};
