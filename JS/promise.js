@@ -54,11 +54,14 @@ const getEgg = hen =>
     });
 const cook = egg => 
     new Promise((resolve, reject) => {
-        setTimeout(() => resolve(`${egg} => fyred egg`), 1000);
+        setTimeout(() => resolve(`${egg} => fyred`), 1000);
     });
 
 getHen()
 .then(getEgg)
+.catch(error => {
+    return 'bread';
+})
 .then(cook)
 .then(console.log)
 .catch(console.log);

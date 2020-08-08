@@ -20,7 +20,7 @@ class UserStorage {
             } else {
                 onError(new Error('no access'));
             }
-        })
+        }, 1000);
     }
 }
 
@@ -28,13 +28,15 @@ const userStorage = new UserStorage();
 const id = prompt('enter your id');
 const password = prompt('enter your password');
 
-userStorage.loginUser(id, password, 
-
+userStorage.loginUser(
+id, 
+password, 
 user => {
     userStorage.getRoles(
         user,
         userWriteRole => {
-            alert(`Hello ${userWriteRole.name}, your have a ${userWriteRole.role}`)
+            console.log(userWriteRole);
+            alert(`Hello ${userWriteRole.name}, your have a ${userWriteRole.role}`);
         },
         error => {
             console.log(error);
