@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>RESTful SERVER</title>
+        <meta charset="utf-8">
+        <style>
+            a{ 
+                color: blue;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+        </nav>
+        <div>
+            <form id="form">
+                <input type="text" id="username">
+                <button type="submit">등록</button>
+            </form>
+        </div>
+        <div id="list"></div>
+        <script>
+            const form = document.querySelector("#form");
+            const list = document.querySelector("#list");
+            
+            function handleEdit(key) {
+                const name = prompt("바꿀 이름을 입력하세요");
+                if(!name){
+                    return alert("이름을 입력하지 않았습니다");
+                }
+                const xhr = new XMLHttpRequest();
+                xhr.onload = function() {
+                    if(xhr.status === 200) {
+                        console.log(xhr.responseText);
+                        getUser();
+                    } else {
+                        console.error(xhr.responseText);
+                    }
+                }
+                xhr.open("PUT", "./users/" + key);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(JSON.stringify({name: name}));
+            }
+
+            function handleRemove(key) {
+                const xhr = new XMLHttpRequest();
+                
+                xhr.onload = function() {
+                    if(xhr.status === 200){
+                        console.log(xhr.responseText);
+                        getUser();
+                    } else {
+                        console.error(xhr.responseText);
+                    }
+                }
+
+                xhr.open("DELETE", "/users/" + key);
+                xhr.send();
+            }
+
+            function getUser() {
+                const xhr = new XMLHttpRequest();
+                xhr.onload = function() {
+                    const users = JSON.parse(xhr.responseText);
+                    console.log(users);
+                    list.innerHTML = '';
+                    Object.keys(users).map(function(key) {
+                        const userDiv = document.createElement("div");
+                        const li = document.createElement("li");
+                        li.innerText = users[key];
+                        
+                        const edit = document.createElement("button");
+                        edit.textContent = "수정";
+                        edit.addEventListener("click", () => { handleEdit(key) });
+            
+                        const remove = document.createElement("button");
+                        remove.textContent = "삭제";
+                        remove.addEventListener("click", () => { handleRemove(key) });
+
+                        userDiv.appendChild(li);
+                        userDiv.appendChild(edit);
+                        userDiv.appendChild(remove);
+                        list.appendChild(userDiv);
+                    });
+                }
+                xhr.open("GET", "/users");
+                xhr.send();
+            }
+
+            window.onload = getUser();
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                const name = e.target.username.value;
+                if(!name) {
+                    alert("이름을 입력하세요");
+                }
+                else {
+                    const xhr = new XMLHttpRequest();
+
+                    xhr.onload = function() {
+                        if(xhr.status === 201) {
+                            console.log(xhr.responseText);
+                            getUser();
+                        } 
+                        else {
+                            console.error(xhr.responseText);
+                        }
+                    }
+                    xhr.open('POST', '/users');
+                    xhr.setRequestHeader('Content-Type', 'applicatino/json');
+                    xhr.send(JSON.stringify({name: name}));
+                    e.target.username.value = '';
+                }
+            });
+        </script>
+    </body>
+</html>
