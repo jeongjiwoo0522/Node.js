@@ -35,6 +35,7 @@ user => {
     userStorage.getRoles(
         user,
         userWriteRole => {
+            console.log(user);
             console.log(userWriteRole);
             alert(`Hello ${userWriteRole.name}, your have a ${userWriteRole.role}`);
         },

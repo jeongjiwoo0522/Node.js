@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--
+
+      클로저
+      자신이 생성됐을 때의 환경(렉시컬 환경)을 
+      기억하는 함수
+      클로저는 반환된 내부함수가 자신이 선언됐을 때의 환경(Lexical environment)인 
+      스코프를 기억하여 자신이 선언됐을 때의 환경(스코프) 밖에서 호출되어도 그 환경(스코프)에 접근할 수 있는 함수를 말한다. 
+      이를 조금 더 간단히 말하면 클로저는 자신이 생성될 때의 환경(Lexical environment)을 기억하는 함수다라고 말할 수 있겠다.
+    -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>클로저 사용의 예</h1>
+    <hr>
+    <p>
+      <p>1. 전역변수의 사용 억제</p>
+      <button id="increase">+</button>
+      <p id="count">0</p>
+    </p>
+    <p>
+      <p>2. 상태 유지</p>
+      <button class="toggle">toggle</button>
+      <div class="box" style="width: 100px; height: 100px; background: red;"></div>
+    </p>
+    <script>
+      const increaseBtn = document.querySelector("#increase");
+      const count = document.getElementById("count");
+
+      // let counter = 0;
+      // // 카운트 상태를 유지하기 위한 전역변수
+      // // 전역변수이기 때문에 값이 의도치 않게 변경 될 수 있다.
+      // // counter는 카운터를 관리하는 increse 함수가 관리하는 것이 바람직하다.
+      // function increase() {
+      //   return ++counter;
+      // }
+
+      // increaseBtn.onclick = function () {
+      //   count.innerHTML = increase();
+      // };
+      const increase = (function() {
+        let counter = 0;
+        //카운터 상태를 유지하기 위한 자유변수
+        return function() {
+          //클로저를 반환
+          return ++counter;
+        }
+      })();
+
+      increaseBtn.onclick = function() {
+        count.innerHTML = increase(); 
+      }
+    </script>
+    <script>
+      const box = document.querySelector(".box");
+      const toggleBtn = document.querySelector(".toggle");
+      //2.1 상태 유지
+//클로저가 가장 유용하게 사용되는 상황은 현재 상태를 기억하고 변경된 최신 상태를 유지하는 것이다.
+      const toggle = (function() {
+        let isShow = false;
+        // free value
+        return function() {
+          box.style.display = isShow ? "block" : "none";
+          isShow = !isShow;
+        }
+      })(); //toggle == closer 
+      toggleBtn.onclick = toggle;
+    </script>
+  </body>
+</html>
