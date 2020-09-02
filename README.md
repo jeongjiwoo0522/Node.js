@@ -1,3 +1,3 @@
-# Node.js
+# TIL
 
-* learn Node.js
+* Today I Learned
