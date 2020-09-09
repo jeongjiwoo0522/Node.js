@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const User = require("./user");
-const Comment = require("./user");
+const Comment = require("./comment");
 
 const env = process.env.NODE_ENV || 'development';
 // development: 개발용, test: 테스트용, production: 베포용 conpig.json 확인 필수

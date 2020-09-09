@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 
 module.exports = class Comment extends Sequelize.Model {
-  static init(sequlize) {
+  static init(sequelize) {
     return super.init({
       comment: {
         type: Sequelize.STRING(100),
@@ -9,8 +9,8 @@ module.exports = class Comment extends Sequelize.Model {
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: true,
-        defaultValue: Sequelize.NOW(),
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
       },
     }, {
       sequelize,

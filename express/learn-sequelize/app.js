@@ -9,14 +9,16 @@ const { Op } = require("sequelize");
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const commentsRouter = require('./routes/comments');
 
-const { User } = require("./models");
+const { User } = require("./models/index.js");
+const { Comment } = require("./models/index.js");
 
 const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'html');
 nunjucks.configure("views", {
   express: app,
   watch: true,
@@ -25,9 +27,7 @@ nunjucks.configure("views", {
 // sync 메소드를 사용해 서버 실행 시 mySQL과 연동되게 한다 
 // force: false true로 설정하면 서버 실행 시마다 테이블을 재생성한다. 
 // 테이블을 잘못 만든 경우에 true로 설정
-sequelize.sync({ force: false })
-  .then(() => console.log("연결 성공"))
-  .catch(console.log);
+const sequelizeSync = sequelize.sync({ force: false });
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -37,7 +37,7 @@ app.use(cookieParser());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
+app.use('/comments', commentsRouter);
 
 // create 
 // insert into users (name, age, married, comment) values ("jiwoo", 17, 0, "자기소개1");
@@ -129,7 +129,10 @@ app.use('/users', usersRouter);
 //   .then(() => console.log("delete ok"))
 //   .catch(console.log);
 
-
+// MySQL 관계 쿼리
+sequelizeSync
+  .then(() => console.log("연결 성공"))
+  .catch(console.log);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
