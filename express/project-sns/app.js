@@ -5,6 +5,7 @@ const path = require("path");
 const session = require("express-session");
 const nunjucks = require("nunjucks");
 const dotenv = require("dotenv");
+const { sequelize } = require("./models");
 
 dotenv.config();
 const pageRouter = require("./routes/page");
@@ -13,25 +14,33 @@ const app = express();
 
 app.set("port", process.env.PORT || 8000);
 app.set("view engine", "html");
-nunjucks.configure({
+nunjucks.configure("views", {
   express: app,
   watch: true,
 });
+
+sequelize.sync({ force: false })
+  .then(() => {
+    console.log("데이터 베이스 연결 성공");
+  })
+  .catch(console.error);
 
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(session({
-  resave: false,
-  saveUninitialized: false,
-  secret: process.env.COOKIE_SECRET,
-  cookie: {
-    httpOnly: true,
-    secure: false
-  }
-}));
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.COOKIE_SECRET,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+    },
+  })
+);
 
 app.use("/", pageRouter);
 
