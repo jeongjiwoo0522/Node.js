@@ -86,7 +86,7 @@ app.use('/comments', commentsRouter);
 //   attributes: ["name", "married"],
 //   where: {
 //     married: 1,
-//     age: { [Op.gt]: 30 },
+//     age: { [Op.gt]: 30 }, greater then // less then 
 //     // Op.gt 초과 gte 이상 lt 미만 lte 이하 ne 같지 않음 
 //     // or 또는 in 배열 요소 중 하나  notIn 배열요소와 모두 다름
 //   },
@@ -107,7 +107,7 @@ app.use('/comments', commentsRouter);
 // // select id, name from users oder by age desc limit 1 offset 1;\
 // User.findAll({
 //   attributes: ["id", "name"],
-//   order: ["age", "DESC"],
+//   order: [["age", "DESC"]], 2차원 배열인 이유: [["age", "DESC"], ["create", ]]
 //   limit: 1,
 //   offset: 1,
 // })

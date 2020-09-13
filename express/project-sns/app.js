@@ -5,21 +5,33 @@ const path = require("path");
 const session = require("express-session");
 const nunjucks = require("nunjucks");
 const dotenv = require("dotenv");
-const { sequelize } = require("./models");
-
+//passport
+const passport = require("passport");
+// .env
 dotenv.config();
+// router
 const pageRouter = require("./routes/page");
+// db
+const { sequelize } = require("./models");
+// passport
+const passportConfig = require("./passport");
 
 const app = express();
+//passport
+passportConfig();
 
 app.set("port", process.env.PORT || 8000);
+
+// view engine
 app.set("view engine", "html");
 nunjucks.configure("views", {
   express: app,
   watch: true,
 });
 
-sequelize.sync({ force: false })
+// db
+sequelize
+  .sync({ force: false })
   .then(() => {
     console.log("데이터 베이스 연결 성공");
   })
@@ -42,6 +54,11 @@ app.use(
   })
 );
 
+//passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// router
 app.use("/", pageRouter);
 
 app.use((req, res, next) => {
