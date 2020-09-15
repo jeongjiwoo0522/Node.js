@@ -1,6 +1,6 @@
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize');
 
-module.exports = class Hachtag extends Sequelize.Model {
+module.exports = class Hashtag extends Sequelize.Model {
   static init(sequelize) {
     return super.init({
       title: {
@@ -12,15 +12,16 @@ module.exports = class Hachtag extends Sequelize.Model {
       sequelize,
       timestamps: true,
       underscored: false,
-      modelName: "Hachtag",
-      tableName: "hashtags",
+      modelName: 'Hashtag',
+      tableName: 'hashtags',
       paranoid: false,
-      charset: "utf8mb4",
-      collate: "utf8mb4_general_ci",
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_general_ci',
     });
   }
 
   static associate(db) {
-    db.Hashtag.belongsToMany(db.Post, { through: "PostHashtag" });
+    db.Hashtag.belongsToMany(db.Post, { through: 'PostHashtag' });
   }
-}
+};
+
