@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+     <html>
+     <head>
+     </head>
+     <body>
+       <h1>Hello World</h1>
+       <h2 id="h2">0</h2>
+       <button id="button">+</button>
+     </body>
+     <script>
+       function rexical() {
+         let num = 0;
+         return function () {
+          return ++num;
+         }
+       }
+
+       const h2 = document.querySelector("h2");
+       const number = rexical();
+
+       document.querySelector("button").addEventListener("click", () => {
+        h2.innerText = number();
+       });
+     </script>
+     </html>
