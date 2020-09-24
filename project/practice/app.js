@@ -7,6 +7,8 @@ const nunjucks = require("nunjucks");
 const dotenv = require("dotenv");
 const { sequelize } = require("./models");
 const indexRouter = require("./routes/index");
+const circlesRouter = require("./routes/circles");
+const userRouter = require("./routes/users");
 
 const app = express();
 
@@ -32,6 +34,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/", indexRouter);
+app.use("/circles", circlesRouter);
+app.use("/users", userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -28,6 +28,6 @@ module.exports = class Leader extends Sequelize.Model {
   }
 
   static associate(db) {
-
+    db.Leader.belongsTo(db.Leader, { foreignKey: "circleId", targetKey: "id" });
   }
-}
+};
