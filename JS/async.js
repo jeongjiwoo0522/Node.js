@@ -2,7 +2,7 @@
 // 깔끔
 
 async function fetchUser() {
-  return "ellie";
+  return "jiwoo";
 }
 
 fetchUser().then(console.log);
