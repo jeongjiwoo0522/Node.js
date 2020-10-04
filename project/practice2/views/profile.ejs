@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <% include ./stylesheet %>
+</head>
+<body>
+    <% include ./header %>
+
+    <div class="container">
+        <h1><%= title %></h1>
+        <div class="datails">
+
+            <div class="card text-xs-center">
+                <br>
+                <div class="card-block">
+                    <h4 class="card-title">User Details</h4>
+                    <p class="card-text">
+                    </p>
+                    <a href="/logout" class="btn btn-default">Logout</a>
+                    <p class="card-text">
+                        <strong>Name</strong>: <%= user.name %><br>
+                        <strong>Email</strong>: <%= user.email %>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+        <% include ./footer %>
+        <% include ./javascript %>
+    </body>
+    </html>

@@ -1,19 +1,21 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 
 const app = express();
 
 app.use(express.static(`D:\\learning Node.js/HTML`));
 
 // application/x-www-form-urlencoded 파싱
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 
 // application/json 파싱
-app.use(bodyParser.json());
+app.use(express.json());
 
-app.use((req, res) => {
-  const userId = req.body.userId || req.query.userId;
-  const userPassword = req.body.password || req.query.password;
+app.get("/", (req, res) => {
+  //const userId = req.body.userId || req.query.userId;
+  //const userPassword = req.body.password || req.query.password;
+//
+  //console.log(userId);
+  //console.log(userPassword); 
 
   res.writeHead("200", {
     "Content-Type": "text/html;charset=utf8"
@@ -24,4 +26,4 @@ app.use((req, res) => {
   res.end(JSON.stringify(req.body, null, 2));
 });
 
-app.listen(3000);
+app.listen(3002);
