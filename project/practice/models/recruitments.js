@@ -24,7 +24,5 @@ module.exports = class Recruitment extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.Recruitment.belongsTo(db.User, { foreignKey: "userId", targetKey: "id" });
-    db.Recruitment.belongsTo(db.Circle, { foreignKey: "circleId", targetKey: "id" });
   }
 };

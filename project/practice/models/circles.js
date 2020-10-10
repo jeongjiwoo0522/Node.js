@@ -28,8 +28,6 @@ module.exports = class Circle extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.Circle.hasOne(db.Leader, { foreignKey: "circleId", sourceKey: "id" });
-    db.Circle.hasMany(db.User, { foreignKey: "circleId", sourceKey: "id" });
-    db.Circle.hasMany(db.Recruitment, { foreignKey: "circleId", sourceKey: "id"});
+    db.Circle.belongsToMany(db.User, { through: "Recruitment" });
   }
 };

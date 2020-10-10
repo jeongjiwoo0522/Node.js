@@ -1,7 +1,6 @@
 const Sequelize = require("sequelize");
 
 const User = require("./users");
-const Leader = require("./leaders");
 const Recruitment = require("./recruitments");
 const Circle = require("./circles");
 
@@ -15,17 +14,14 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 db.sequelize = sequelize;
 
 db.User = User;
-db.Leader = Leader;
 db.Recruitment = Recruitment;
 db.Circle = Circle;
 
 User.init(sequelize);
-Leader.init(sequelize);
 Recruitment.init(sequelize);
 Circle.init(sequelize);
 
 User.associate(db);
-Leader.associate(db);
 Recruitment.associate(db);
 Circle.associate(db);
 
