@@ -11,6 +11,7 @@ dotenv.config();
 
 const webSocket = require("./socket");
 const indexRouter = require('./routes/index');
+const connect = require("./schemas");
 
 const app = express();
 
@@ -20,6 +21,7 @@ nunjucks.configure("views", {
   express: app,
   watch: true,
 });
+connect();
 
 app.use(logger('dev'));
 app.use(express.json());
