@@ -6,6 +6,7 @@ const logger = require('morgan');
 const dotenv = require("dotenv");
 const session = require("express-session");
 const nunjucks = require("nunjucks");
+const ColorHash = require("color-hash");
 
 dotenv.config();
 
@@ -23,16 +24,26 @@ nunjucks.configure("views", {
 });
 connect();
 
+const sessionMiddleware = session({
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.COOKIE_SECRET,
+});
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-  resave: false,
-  saveUninitialized: false,
-  secret: process.env.COOKIE_SECRET,
-}));
+app.use(sessionMiddleware);
+
+app.use((req, res, next) => {
+  if(!req.session.color) {
+    const colorHash = new ColorHash();
+    req.session.color = colorHash.hex(req.sessionID);
+  }
+  next();
+});
 
 app.use('/', indexRouter);
 
@@ -56,4 +67,4 @@ const server = app.listen(process.env.PORT, () => {
   console.log(process.env.PORT, "번 포트에서 대기 중");
 });
 
-webSocket(server);
+webSocket(server, app, sessionMiddleware);
