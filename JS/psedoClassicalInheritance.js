@@ -1,8 +1,5 @@
 // 상속
 
-
-// pseudo-classical inheritance
-
 const Parent = (function () {
   function Parent (name) {
     this.name = name;
