@@ -1,10 +1,9 @@
 const request = require("request");
 const iconv = require("iconv-lite");
 const charset = require("charset");
-const { response } = require("express");
 
 const crawl = callback => queryString => request({
-  url: "https://www.google.com/search",
+  url: "http://search.11st.co.kr/Search.tmall?kwd=ssd",
   encoding: null,
   method: "GET",
   qs: queryString,
